@@ -1,7 +1,7 @@
 def getKey(key: str):
     items = key.split('/')
     for i in items[::-1]:
-        if i != '':
+        if i != '' and i[0] != '?':
             ret = i.split('-')
             for j in range(len(ret)):
                 if len(ret[j]) > 0:
@@ -63,8 +63,10 @@ for i in range(len(problems)):
         break
 
 for j in range(i+1, len(problems)):
-    if 'Example' in problems[j] or 'Constraints' in problems[j] or 'Follow-up' in problems[j]:
+    if 'Example' in problems[j] or 'Constraints' in problems[j] or 'Follow' in problems[j]:
         problems[j] = f'\n{problems[j].strip()}'
+    else:
+        problems[j] = f'\t{problems[j].strip()}'
 
 question = ''.join(problems[:i])
 example_and_followup = '\n'.join(problems[i:])
