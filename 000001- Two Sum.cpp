@@ -54,6 +54,7 @@ public:
 
     void test() {
         assert(twoSum(*(new vector<int>({2,7,11,15})), 9) == *(new vector<int>({0, 1})) );
+        cout<<"test succeeded.\n";
     }
 };
 

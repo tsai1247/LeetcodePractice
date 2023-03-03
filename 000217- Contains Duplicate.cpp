@@ -39,11 +39,12 @@ public:
 	}
 
     void test() {
-        cout << setw(5) << containsDuplicate(*(new vector<int>({1, 2, 3, 4}))) << endl;  // false
-        cout << setw(5) << containsDuplicate(*(new vector<int>({1, 2, 3, 2}))) << endl;  // true
-        cout << setw(5) << containsDuplicate(*(new vector<int>({1, 1, 1, 2, 3}))) << endl;  // true
-        cout << setw(5) << containsDuplicate(*(new vector<int>({1}))) << endl;  // false
-        cout << setw(5) << containsDuplicate(*(new vector<int>({}))) << endl;  // false
+        assert(containsDuplicate(*(new vector<int>({1, 2, 3, 4}))) == false );
+        assert(containsDuplicate(*(new vector<int>({1, 2, 3, 2}))) == true );
+        assert(containsDuplicate(*(new vector<int>({1, 1, 1, 2, 3}))) == true );
+        assert(containsDuplicate(*(new vector<int>({1}))) == false );
+        cout<<"test succeeded.\n";
+
     }
 };
 

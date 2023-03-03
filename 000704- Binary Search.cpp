@@ -43,18 +43,19 @@ public:
     }
 
     void test() {
-		cout << setw(2) << search(*(new vector<int>({1, 2, 3, 4, 5})), 1) << endl;  // 0
-        cout << setw(2) << search(*(new vector<int>({1, 2, 3, 4, 5})), 3) << endl;  // 2
-        cout << setw(2) << search(*(new vector<int>({1, 2, 3, 4, 5})), 5) << endl;  // 4
-        cout << setw(2) << search(*(new vector<int>({1, 2, 3, 4, 5})), 0) << endl;  // -1
-        cout << setw(2) << search(*(new vector<int>({1, 2, 3, 4, 5})), 6) << endl;  // -1
-        cout << setw(2) << search(*(new vector<int>({1, 2})), 1) << endl;  // 0
-        cout << setw(2) << search(*(new vector<int>({1, 2})), 2) << endl;  // 1
-        cout << setw(2) << search(*(new vector<int>({1, 2})), 0) << endl;  // -1
-        cout << setw(2) << search(*(new vector<int>({1, 2})), 3) << endl;  // -1
-        cout << setw(2) << search(*(new vector<int>({1})), 1) << endl;  // 0
-        cout << setw(2) << search(*(new vector<int>({1})), 0) << endl;  // -1
-        cout << setw(2) << search(*(new vector<int>({1})), 2) << endl;  // -1
+        assert(search(*(new vector<int>({1, 2, 3, 4, 5})), 1) ==  0 );
+        assert(search(*(new vector<int>({1, 2, 3, 4, 5})), 3) ==  2 );
+        assert(search(*(new vector<int>({1, 2, 3, 4, 5})), 5) ==  4 );
+        assert(search(*(new vector<int>({1, 2, 3, 4, 5})), 0) == -1 );
+        assert(search(*(new vector<int>({1, 2, 3, 4, 5})), 6) == -1 );
+        assert(search(*(new vector<int>({1, 2})), 1) ==  0 );
+        assert(search(*(new vector<int>({1, 2})), 2) ==  1 );
+        assert(search(*(new vector<int>({1, 2})), 0) == -1 );
+        assert(search(*(new vector<int>({1, 2})), 3) == -1 );
+        assert(search(*(new vector<int>({1})), 1) ==  0 );
+        assert(search(*(new vector<int>({1})), 0) == -1 );
+        assert(search(*(new vector<int>({1})), 2) == -1 );
+        cout<<"test succeeded.\n";
     }
 };
 

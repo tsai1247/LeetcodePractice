@@ -47,11 +47,12 @@ public:
     }
 
     void test() {
-        cout << setw(5) << maxSubArray(*(new vector<int>({-2,1,-3,4,-1,2,1,-5,4}))) << endl;  // 6
-        cout << setw(5) << maxSubArray(*(new vector<int>({1}))) << endl;  // 1
-        cout << setw(5) << maxSubArray(*(new vector<int>({5,4,-1,7,8}))) << endl;  // 23
-        cout << setw(5) << maxSubArray(*(new vector<int>({-1}))) << endl;  // -1
-        cout << setw(5) << maxSubArray(*(new vector<int>({-2, -1}))) << endl;  // -1
+        assert( maxSubArray(*(new vector<int>({-2,1,-3,4,-1,2,1,-5,4}))) == 6);
+        assert( maxSubArray(*(new vector<int>({1}))) == 1);
+        assert( maxSubArray(*(new vector<int>({5,4,-1,7,8}))) == 23);
+        assert( maxSubArray(*(new vector<int>({-1}))) == -1);
+        assert( maxSubArray(*(new vector<int>({-2, -1}))) == -1);
+        cout<<"test succeeded.\n";
     }
 };
 
