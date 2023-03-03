@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+/*
+# Problem {}. tag: {}
+## Question:
+{}
+
+{}
+
+*/
+
+{}
+
+    void test() {
+        cout << setw(10) << {}(*(new vector<int>({1, 2, 3, 4, 5}))) << endl; // expected answer
+    }
+};
+
+int main()
+{
+    Solution().test();
+}
