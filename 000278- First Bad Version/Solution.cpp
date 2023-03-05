@@ -26,21 +26,11 @@ Constraints:
 
 // The API isBadVersion is defined for you.
 // bool isBadVersion(int version);
+
+#include "VersionManager.h"
+
 class Solution {
-private:
-	int n, bad;
-	bool isBadVersion(int version)
-	{
-		return version >= bad;
-	}
-
 public:
-	void setBad(int n, int bad)
-	{
-		this->n = n;
-		this->bad = bad;
-	}
-
 	int firstBadVersion(int n) {
         long long left = 0, right = n;
         int min_badversion = n;

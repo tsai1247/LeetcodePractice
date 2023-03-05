@@ -21,6 +21,8 @@ url: str = input('Give me your url: ')
 url = getURL(url)
 
 
+from os import path
+import os
 from typing import List, Tuple
 import chromedriver_autoinstaller
 from selenium import webdriver
@@ -81,6 +83,8 @@ for i in range(len(data_inserted)):
 
 result.append(template[-1])
 
-filename = f'{problem_num.zfill(6)}-{title}.cpp'
+foldername = f'{problem_num.zfill(6)}-{title}'
 
-open(filename, 'w', encoding='utf-8').writelines(result)
+if not path.exists(foldername):
+    os.mkdir(foldername)
+open(f'{foldername}/Solution.cpp', 'w', encoding='utf-8').writelines(result)

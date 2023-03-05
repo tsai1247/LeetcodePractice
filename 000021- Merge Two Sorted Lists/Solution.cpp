@@ -25,13 +25,6 @@ Constraints:
 
 */
 
-struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
 
 /**
 * Definition for singly-linked list.
@@ -44,35 +37,9 @@ struct ListNode {
 * };
  */
 
+#include "../ListNode.h"
+
 class Solution {
-private:
-	bool Equals(ListNode* a, ListNode* b)
-	{
-		ListNode* a_cur = a, * b_cur = b;
-		while(a_cur != NULL && b_cur != NULL)
-		{
-			if(a_cur->val != b_cur->val)
-				return false;
-			a_cur = a_cur->next;
-			b_cur = b_cur->next;
-		}
-		return a_cur == NULL && b_cur == NULL;
-	}
-
-	ListNode* make_list(vector<int>& list)
-	{
-		if(list.size() == 0)
-			return NULL;
-		ListNode* ret = new ListNode(list[0]);
-		ListNode* cur = ret;
-		for(int i=1; i<list.size(); i++)
-		{
-			cur->next = new ListNode(list[i]);
-			cur = cur->next;
-		}
-		return ret;
-	}
-
 public:
 	ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
 		if(list1 == NULL)
@@ -118,60 +85,60 @@ public:
         assert( 
 			Equals(
 				mergeTwoLists( 
-					make_list( *(new vector<int>( {1, 2, 4})) ), 
-					make_list( *(new vector<int>( {1, 3, 4} ) ) )
+					make_ListNode( *(new vector<int>( {1, 2, 4})) ), 
+					make_ListNode( *(new vector<int>( {1, 3, 4} ) ) )
 				), 
-				make_list( *(new vector<int>( {1, 1, 2, 3, 4, 4} )) )
+				make_ListNode( *(new vector<int>( {1, 1, 2, 3, 4, 4} )) )
 			)
 		);
 		
 		assert( 
 			Equals(
 				mergeTwoLists( 
-					make_list( *(new vector<int>( {})) ), 
-					make_list( *(new vector<int>( {} ) ) )
+					make_ListNode( *(new vector<int>( {})) ), 
+					make_ListNode( *(new vector<int>( {} ) ) )
 				), 
-				make_list( *(new vector<int>( {} )) )
+				make_ListNode( *(new vector<int>( {} )) )
 			)
 		);
 
 		assert( 
 			Equals(
 				mergeTwoLists( 
-					make_list( *(new vector<int>( {})) ), 
-					make_list( *(new vector<int>( {0} ) ) )
+					make_ListNode( *(new vector<int>( {})) ), 
+					make_ListNode( *(new vector<int>( {0} ) ) )
 				), 
-				make_list( *(new vector<int>( {0} )) )
+				make_ListNode( *(new vector<int>( {0} )) )
 			)
 		);
 
 		assert( 
 			Equals(
 				mergeTwoLists( 
-					make_list( *(new vector<int>( {0})) ), 
-					make_list( *(new vector<int>( {} ) ) )
+					make_ListNode( *(new vector<int>( {0})) ), 
+					make_ListNode( *(new vector<int>( {} ) ) )
 				), 
-				make_list( *(new vector<int>( {0} )) )
+				make_ListNode( *(new vector<int>( {0} )) )
 			)
 		);
 
 		assert( 
 			Equals(
 				mergeTwoLists( 
-					make_list( *(new vector<int>( {1, 2, 3})) ), 
-					make_list( *(new vector<int>( {4, 5, 6} ) ) )
+					make_ListNode( *(new vector<int>( {1, 2, 3})) ), 
+					make_ListNode( *(new vector<int>( {4, 5, 6} ) ) )
 				), 
-				make_list( *(new vector<int>( {1, 2, 3, 4, 5, 6} )) )
+				make_ListNode( *(new vector<int>( {1, 2, 3, 4, 5, 6} )) )
 			)
 		);
 
 		assert( 
 			Equals(
 				mergeTwoLists( 
-					make_list( *(new vector<int>( {4, 5, 6} ) ) ), 
-					make_list( *(new vector<int>( {1, 2, 3})) ) 
+					make_ListNode( *(new vector<int>( {4, 5, 6} ) ) ), 
+					make_ListNode( *(new vector<int>( {1, 2, 3})) ) 
 				), 
-				make_list( *(new vector<int>( {1, 2, 3, 4, 5, 6} )) )
+				make_ListNode( *(new vector<int>( {1, 2, 3, 4, 5, 6} )) )
 			)
 		);
         cout<<"test succeeded.\n";
