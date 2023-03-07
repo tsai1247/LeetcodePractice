@@ -18,6 +18,7 @@ def getURL(key: str):
 
 from os import path
 import os
+from time import sleep
 from typing import List, Tuple
 import chromedriver_autoinstaller
 from selenium import webdriver
@@ -82,10 +83,12 @@ while True:
     try:
         url = getURL(url)
 
+        print(f'Searching "{getKey(url)}" at url: {url}')
         driver.get(url)
-
+        
         problem_num, title = find_element(By.XPATH, '//div[@class="h-full"]/span').text.split('.')
         difficulty_tag = find_element(By.CLASS_NAME, 'mt-3').find_element(By.TAG_NAME, 'div').text
+        sleep(0.5)
         function_template = find_element(By.CLASS_NAME, 'view-lines').text[:-3]
         function_name = function_template.split('public:\n')[1].split('(')[0].split(' ')[-1]
 
@@ -153,5 +156,6 @@ while True:
         open(f'{foldername}/Problem.md', 'w', encoding='utf-8').writelines(md_content)
 
         print('\ntemplate grenerated.')
-    except:
+    except Exception as e:
         print('template generation failed.')
+        open('log.txt', 'a', encoding='utf-8').write(str(e))
