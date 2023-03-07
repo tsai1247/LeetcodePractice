@@ -16,11 +16,6 @@ def getURL(key: str):
     key = key.lower().replace(' ', '-')
     return f'https://leetcode.com/problems/{key}/'
 
-url: str = input('Give me your url: ')
-# url = 'https://leetcode.com/problems/maximum-subarray/'
-url = getURL(url)
-
-
 from os import path
 import os
 from typing import List, Tuple
@@ -74,66 +69,89 @@ chrome_options.add_argument('log-level=2')
 driver = webdriver.Chrome(options=chrome_options)
 driver.maximize_window()
 
-driver.get(url)
-
-problem_num, title = find_element(By.XPATH, '//div[@class="h-full"]/span').text.split('.')
-difficulty_tag = find_element(By.CLASS_NAME, 'mt-3').find_element(By.TAG_NAME, 'div').text
-function_template = find_element(By.CLASS_NAME, 'view-lines').text[:-3]
-function_name = function_template.split('public:\n')[1].split('(')[0].split(' ')[-1]
-
-problems = find_element(By.CLASS_NAME, '_1l1MA').text.split('\n')
-for i in range(len(problems)):
-    if 'Example' in problems[i]:
-        problems[i] = f'* {problems[i].strip()}'
+while True:
+    try:
+        url: str = input('Give me your url: ')
+    except EOFError:
+        print('Receive EOF.')
         break
-question = '```\n' + '\n'.join(problems[:i]) + '\n```'
+    except KeyboardInterrupt:
+        print('Receive interrupt')
+        break
 
-content_tab_num = 2
-for j in range(i+1, len(problems)):
-    if 'Example ' in problems[j] or 'Constraints:' in problems[j] or 'Follow up:' in problems[j]:
-        problems[j] = f'\n* {problems[j].strip()}'
-        if 'Constraints:' in problems[j]:
-            content_tab_num = 0
+    try:
+        url = getURL(url)
+
+        driver.get(url)
+
+        problem_num, title = find_element(By.XPATH, '//div[@class="h-full"]/span').text.split('.')
+        difficulty_tag = find_element(By.CLASS_NAME, 'mt-3').find_element(By.TAG_NAME, 'div').text
+        function_template = find_element(By.CLASS_NAME, 'view-lines').text[:-3]
+        function_name = function_template.split('public:\n')[1].split('(')[0].split(' ')[-1]
+
+        problems = find_element(By.CLASS_NAME, '_1l1MA').text.split('\n')
+        for i in range(len(problems)):
+            if 'Example' in problems[i]:
+                problems[i] = f'* {problems[i].strip()}'
+                break
+        question = '```\n' + '\n'.join(problems[:i]) + '\n```'
+
+        content_tab_num = 2
+        for j in range(i+1, len(problems)):
+            if 'Example ' in problems[j] or 'Constraints:' in problems[j] or 'Follow up:' in problems[j]:
+                problems[j] = f'\n* {problems[j].strip()}'
+                if 'Constraints:' in problems[j]:
+                    content_tab_num = 0
+                else:
+                    content_tab_num = 2
+
+            elif 'Input:' in problems[j] or 'Output:' in problems[j] or 'Explanation:' in problems[j]:
+                problems[j] = f'\t* {problems[j].strip()}'
+            else:   # content
+                problems[j] = ('\t' * content_tab_num) + f'* {problems[j].strip()}'
+
+        examples = ''
+        constraints = None
+        followup = ''
+
+        for j in range(i+1, len(problems)):
+            if 'Constraints:' in problems[j]:
+                examples = '\n'.join(problems[i:j])
+                i = j+1
+            elif 'Follow' in problems[j] and 'up:' in problems[j]:
+                constraints = '\n'.join(problems[i:j])
+                i = j
+        if constraints is None:
+            constraints = '\n'.join(problems[i:])
         else:
-            content_tab_num = 2
-
-    elif 'Input:' in problems[j] or 'Output:' in problems[j] or 'Explanation:' in problems[j]:
-        problems[j] = f'\t* {problems[j].strip()}'
-    else:   # content
-        problems[j] = ('\t' * content_tab_num) + f'* {problems[j].strip()}'
-
-for j in range(i+1, len(problems)):
-    if 'Constraints:' in problems[j]:
-        examples = '\n'.join(problems[i:j])
+            followup = '\n'.join(problems[i:])
         i = j+1
-    elif 'Follow up:' in problems[j]:
-        constraints = '\n'.join(problems[i:j])
-        i = j
 
-followup = '\n'.join(problems[i:])
-i = j+1
+        foldername = f'{problem_num.zfill(6)}-{title}'
+        if not path.exists(foldername):
+            os.mkdir(foldername)
 
-foldername = f'{problem_num.zfill(6)}-{title}'
-if not path.exists(foldername):
-    os.mkdir(foldername)
+        def fill_template(template_filename: str, data_insertedd: List[str]) -> List[str]:
+            content = []
+            template = ''.join(open(template_filename, 'r', encoding='utf-8').readlines()).split('{}')
+            assert(len(data_insertedd) + 1 == len(template))
+            for i in range(len(data_insertedd)):
+                content.append(template[i])
+                content.append(data_insertedd[i])
+            content.append(template[-1])
+            
+            return content
 
-def fill_template(template_filename: str, data_insertedd: List[str]) -> List[str]:
-    content = []
-    template = ''.join(open(template_filename, 'r', encoding='utf-8').readlines()).split('{}')
-    assert(len(data_insertedd) + 1 == len(template))
-    for i in range(len(data_insertedd)):
-        content.append(template[i])
-        content.append(data_insertedd[i])
-    content.append(template[-1])
-    
-    return content
+        md_data_inserted = [problem_num, difficulty_tag, question, 
+                            examples, constraints, followup]
+        cpp_data_inserted = [function_template, function_name]
 
-md_data_inserted = [problem_num, difficulty_tag, question, 
-                    examples, constraints, followup]
-cpp_data_inserted = [function_template, function_name]
+        cpp_content = fill_template('template.cpp.template', cpp_data_inserted)
+        md_content = fill_template('template.md.template', md_data_inserted)
 
-cpp_content = fill_template('template.cpp.template', cpp_data_inserted)
-md_content = fill_template('template.md.template', md_data_inserted)
+        open(f'{foldername}/Solution.cpp', 'w', encoding='utf-8').writelines(cpp_content)
+        open(f'{foldername}/Problem.md', 'w', encoding='utf-8').writelines(md_content)
 
-open(f'{foldername}/Solution.cpp', 'w', encoding='utf-8').writelines(cpp_content)
-open(f'{foldername}/Problem.md', 'w', encoding='utf-8').writelines(md_content)
+        print('\ntemplate grenerated.')
+    except:
+        print('template generation failed.')
