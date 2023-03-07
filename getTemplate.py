@@ -67,8 +67,6 @@ chrome_options = Options()
 chrome_options.headless = True
 chrome_options.add_argument('log-level=2')
 
-driver = webdriver.Chrome(options=chrome_options)
-driver.maximize_window()
 
 while True:
     try:
@@ -80,6 +78,8 @@ while True:
         print('Receive interrupt')
         break
 
+    driver = webdriver.Chrome(options=chrome_options)
+    driver.maximize_window()
     try:
         url = getURL(url)
 
@@ -158,4 +158,4 @@ while True:
         print('\ntemplate grenerated.')
     except Exception as e:
         print('template generation failed.')
-        open('log.txt', 'a', encoding='utf-8').write(str(e))
+        open('log.txt', 'a', encoding='utf-8').write(str(e) + '\n')
