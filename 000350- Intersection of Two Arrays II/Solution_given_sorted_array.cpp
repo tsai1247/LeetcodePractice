@@ -1,8 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// Time complexity: min( O(nums1.length), O(nums2.length) )
-// Space complexity: min( O(nums1.length), O(nums2.length) )
+// Time complexity: O(min(nums1.length, nums2.length) + O(n log n)
+// Space complexity: O(1)
 class Solution {
 public:
     vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {

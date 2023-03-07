@@ -1,12 +1,20 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+/* Note
+/ About the line 3 and 4 in follow up, if nums2 is large, we should not sort them first like `Solution_given_sorted_array.cpp`.
+/ We just store the smaller list into map, then we can successively check each number in nums2 (maybe some MBs or GBs at a time).
+*/
+
+// Time complexity: O( nums1.length + nums2.length )
+// Space complexity: O( min(nums1.length, nums2.length) )
 class Solution {
 public:
-    // Time complexity: min( O(nums1.length), O(nums2.length) )
-
     vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
         map<int, int> content_map_count;
+        if(nums1.size() > nums2.size())
+            return intersect(nums2, nums1);
+            
         for(auto& content : nums1)
         {
             content_map_count[content]++;
