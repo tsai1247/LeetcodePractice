@@ -130,7 +130,7 @@ while True:
             followup = '\n'.join(problems[i:])
         i = j+1
 
-        foldername = f'{problem_num.zfill(6)}-{title}'
+        foldername = f'{problem_num.zfill(6)}-{title}'.replace("'", "")
         if not path.exists(foldername):
             os.mkdir(foldername)
 
