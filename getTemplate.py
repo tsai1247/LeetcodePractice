@@ -34,14 +34,37 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.common.exceptions import TimeoutException
 
 def find_element(by: str = By.ID, value: Tuple[str, None] = None, timeout: float = 10) -> WebElement:
-    return WebDriverWait(driver, timeout).until(
-        EC.presence_of_element_located((by, value))
-    )
+    def find_once(timeout = timeout):
+        return WebDriverWait(driver, timeout).until(
+            EC.presence_of_element_located((by, value))
+        )
+
+    try:
+        return find_once(timeout/4)
+    except:
+        print(f'find_element({by}, {value}) not found. Program will try again...')
+
+    ret = find_once(timeout / 4 * 3)
+    print(f'element found.')
+    return ret
 
 def find_elements(by: str = By.ID, value: Tuple[str, None] = None, timeout: float = 10) -> List[WebElement]:
-    return WebDriverWait(driver, timeout).until(
-        EC.presence_of_all_elements_located((by, value))
-    )
+    def find_once(timeout = timeout):
+        return WebDriverWait(driver, timeout).until(
+            EC.presence_of_all_elements_located((by, value))
+        )
+
+    try:
+        return find_once(timeout/4)
+    except:
+        print(f'find_elements({by}, {value}) not found. Program will try again...')
+
+    ret = find_once(timeout / 4 * 3)
+    print(f'element found.')
+    return ret
+
+
+    
 
 chromedriver_autoinstaller.install()
 chrome_options = Options()
@@ -61,30 +84,56 @@ function_name = function_template.split('public:\n')[1].split('(')[0].split(' ')
 problems = find_element(By.CLASS_NAME, '_1l1MA').text.split('\n')
 for i in range(len(problems)):
     if 'Example' in problems[i]:
-        problems[i] = f'{problems[i].strip()}'
+        problems[i] = f'* {problems[i].strip()}'
         break
+question = '```\n' + '\n'.join(problems[:i]) + '\n```'
+
+content_tab_num = 2
+for j in range(i+1, len(problems)):
+    if 'Example ' in problems[j] or 'Constraints:' in problems[j] or 'Follow up:' in problems[j]:
+        problems[j] = f'\n* {problems[j].strip()}'
+        if 'Constraints:' in problems[j]:
+            content_tab_num = 0
+        else:
+            content_tab_num = 2
+
+    elif 'Input:' in problems[j] or 'Output:' in problems[j] or 'Explanation:' in problems[j]:
+        problems[j] = f'\t* {problems[j].strip()}'
+    else:   # content
+        problems[j] = ('\t' * content_tab_num) + f'* {problems[j].strip()}'
 
 for j in range(i+1, len(problems)):
-    if 'Example' in problems[j] or 'Constraints' in problems[j] or 'Follow' in problems[j]:
-        problems[j] = f'\n{problems[j].strip()}'
-    else:
-        problems[j] = f'\t{problems[j].strip()}'
+    if 'Constraints:' in problems[j]:
+        examples = '\n'.join(problems[i:j])
+        i = j+1
+    elif 'Follow up:' in problems[j]:
+        constraints = '\n'.join(problems[i:j])
+        i = j
 
-question = ''.join(problems[:i])
-example_and_followup = '\n'.join(problems[i:])
-
-template = ''.join(open('template.cpp.template', 'r', encoding='utf-8').readlines()).split('{}')
-data_inserted = [problem_num, difficulty_tag, question, example_and_followup, function_template, function_name]
-result = []
-assert(len(data_inserted) + 1 == len(template))
-for i in range(len(data_inserted)):
-    result.append(template[i])
-    result.append(data_inserted[i])
-
-result.append(template[-1])
+followup = '\n'.join(problems[i:])
+i = j+1
 
 foldername = f'{problem_num.zfill(6)}-{title}'
-
 if not path.exists(foldername):
     os.mkdir(foldername)
-open(f'{foldername}/Solution.cpp', 'w', encoding='utf-8').writelines(result)
+
+def fill_template(template_filename: str, data_insertedd: List[str]) -> List[str]:
+    content = []
+    template = ''.join(open(template_filename, 'r', encoding='utf-8').readlines()).split('{}')
+    assert(len(data_insertedd) + 1 == len(template))
+    for i in range(len(data_insertedd)):
+        content.append(template[i])
+        content.append(data_insertedd[i])
+    content.append(template[-1])
+    
+    return content
+
+md_data_inserted = [problem_num, difficulty_tag, question, 
+                    examples, constraints, followup]
+cpp_data_inserted = [function_template, function_name]
+
+cpp_content = fill_template('template.cpp.template', cpp_data_inserted)
+md_content = fill_template('template.md.template', md_data_inserted)
+
+open(f'{foldername}/Solution.cpp', 'w', encoding='utf-8').writelines(cpp_content)
+open(f'{foldername}/Problem.md', 'w', encoding='utf-8').writelines(md_content)
