@@ -1,3 +1,4 @@
 .vscode/
 *.exe
 tmp.*
+log.txt
