@@ -2,6 +2,8 @@
 using namespace std;
 #include "../ListNode.h"
 
+// Time complexity: O(depth)
+// Space complexity: O(depth)
 /**
  * Definition for singly-linked list.
  * struct ListNode {

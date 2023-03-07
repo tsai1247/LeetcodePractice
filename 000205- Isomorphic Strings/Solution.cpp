@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// Time complexity: O(s.length + t.length)
+// Space complexity: O(1)
 class Solution {
 public:
     bool isMapping(string s, string t)

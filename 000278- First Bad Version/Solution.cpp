@@ -2,6 +2,8 @@
 using namespace std;
 #include "VersionManager.h"
 
+// Time complexity: O(log n)
+// Space complexity: O(1)
 // The API isBadVersion is defined for you.
 // bool isBadVersion(int version);
 

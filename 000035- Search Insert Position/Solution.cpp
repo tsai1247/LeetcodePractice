@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// Time complexity: O(log n)
+// Space complexity: O(1)
 class Solution {
 public:
     int searchInsert(vector<int>& nums, int target) {

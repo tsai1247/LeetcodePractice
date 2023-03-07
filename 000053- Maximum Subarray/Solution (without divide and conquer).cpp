@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// Time complexity: O(n)
+// Space complexity: O(1)
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {

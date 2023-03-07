@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// Time complexity: O(t.length)
+// Space complexity: O(1)
 class Solution {
 public:
     bool isSubsequence(string s, string t) {

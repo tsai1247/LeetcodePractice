@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// Time complexity: O(n)
+// Space complexity: O(n)
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
