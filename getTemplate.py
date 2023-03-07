@@ -152,8 +152,19 @@ while True:
         cpp_content = fill_template('template.cpp.template', cpp_data_inserted)
         md_content = fill_template('template.md.template', md_data_inserted)
 
-        open(f'{foldername}/Solution.cpp', 'w', encoding='utf-8').writelines(cpp_content)
-        open(f'{foldername}/Problem.md', 'w', encoding='utf-8').writelines(md_content)
+        replace = True
+        if path.exists(f'{foldername}/Solution.cpp'):
+            replace = False
+            replace = True if input(f'{foldername}/Solution.cpp exists, overwrite it? (y/*n)').lower() == 'y' else False
+        if replace:
+            open(f'{foldername}/Solution.cpp', 'w', encoding='utf-8').writelines(cpp_content)
+
+        replace = True
+        if path.exists(f'{foldername}/Problem.md'):
+            replace = False
+            replace = True if input(f'{foldername}/Problem.md exists, overwrite it? (y/*n)').lower() == 'y' else False
+        if replace:
+            open(f'{foldername}/Problem.md', 'w', encoding='utf-8').writelines(md_content)
 
         print('\ntemplate grenerated.')
     except Exception as e:
