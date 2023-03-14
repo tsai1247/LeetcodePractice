@@ -35,3 +35,23 @@ ListNode* make_ListNode(vector<int>& list)
     }
     return ret;
 }
+
+// 設定 head[cyclehead] -> next = head[cycletail]
+// index_cyclehead and index_cycletail are 0-based
+void addCycle(ListNode* head, int index_cyclehead, int index_cycletail)
+{
+    ListNode* cur = head;
+    for(int i=0; i<index_cyclehead; i++)
+    {
+        cur = cur->next;
+    }
+
+    ListNode* tail = head;
+    for(int i=0; i<index_cyclehead; i++)
+    {
+        tail = tail->next;
+    }
+
+    cur->next = tail;
+
+}
