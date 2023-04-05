@@ -29,6 +29,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.common.exceptions import TimeoutException
 
+topics = ['Algorithms', 'Database', 'Shell', 'Concurrency']
+
 def find_element(by: str = By.ID, value: Tuple[str, None] = None, timeout: float = 10) -> WebElement:
     def find_once(timeout = timeout):
         return WebDriverWait(driver, timeout).until(
@@ -135,6 +137,25 @@ while True:
         i = j+1
 
         foldername = f'{problem_num.zfill(6)}-{title}'.replace("'", "")
+        if function_name is None:
+            parent_folder = 'Unknown'
+            while True:
+                try:
+                    print('Give me the problem\'s topic:')
+                    for i in range(len(topics)):
+                        print(f'{i}. {topics[i]}\t', end='')
+                    parent_folder = topics[int(input())]
+                    break
+                except:
+                    continue
+        else:
+            parent_folder = topics[0]
+        
+        foldername = f'{parent_folder}/{foldername}'
+
+        if not path.exists(parent_folder):
+            os.mkdir(parent_folder)
+
         if not path.exists(foldername):
             os.mkdir(foldername)
 
