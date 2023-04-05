@@ -90,7 +90,11 @@ while True:
         difficulty_tag = find_element(By.CLASS_NAME, 'mt-3').find_element(By.TAG_NAME, 'div').text
         sleep(0.5)
         function_template = find_element(By.CLASS_NAME, 'view-lines').text[:-3]
-        function_name = function_template.split('public:\n')[1].split('(')[0].split(' ')[-1]
+        try:
+            function_name = function_template.split('public:\n')[1].split('(')[0].split(' ')[-1]
+        except:
+            function_name = None
+
 
         problems = find_element(By.CLASS_NAME, '_1l1MA').text.split('\n')
         for i in range(len(problems)):
@@ -147,17 +151,23 @@ while True:
 
         md_data_inserted = [problem_num, difficulty_tag, question, 
                             examples, constraints, followup]
-        cpp_data_inserted = [function_template, function_name]
-
-        cpp_content = fill_template('template.cpp.template', cpp_data_inserted)
         md_content = fill_template('template.md.template', md_data_inserted)
 
+        cpp_data_inserted = [function_template, function_name]
+        if function_name is None:
+            cpp_content = function_template.split('\n')
+        else:
+            cpp_content = fill_template('template.cpp.template', cpp_data_inserted)
+        
         replace = True
         if path.exists(f'{foldername}/Solution.cpp'):
             replace = False
             replace = True if input(f'{foldername}/Solution.cpp exists, overwrite it? (y/*n)').lower() == 'y' else False
         if replace:
-            open(f'{foldername}/Solution.cpp', 'w', encoding='utf-8').writelines(cpp_content)
+            if function_name is None:
+                open(f'{foldername}/Solution.unknown', 'w', encoding='utf-8').writelines(cpp_content)
+            else:
+                open(f'{foldername}/Solution.cpp', 'w', encoding='utf-8').writelines(cpp_content)
 
         replace = True
         if path.exists(f'{foldername}/Problem.md'):
