@@ -2,7 +2,8 @@
 using namespace std;
 
 // Time complexity: O(n)
-// Space complexity: O(n)   (The problem is about the basic DP, so I didn't optimize it to O(1) with array size of 3)
+// Space complexity: O(n)   (The problem is about the basic DP, so I didn't optimize it to O(1) with array size of 3
+//                              About the similar optimization, see 001137- N-th Tribonacci Number )
 class Solution {
 public:
     int fib(int n) {
