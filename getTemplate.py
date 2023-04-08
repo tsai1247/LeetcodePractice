@@ -1,4 +1,5 @@
 def getKey(key: str):
+    key = key.replace('/submissions', '')
     items = key.split('/')
     for i in items[::-1]:
         if i != '' and i[0] != '?':
