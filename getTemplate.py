@@ -89,8 +89,14 @@ while True:
         print(f'Searching "{getKey(url)}" at url: {url}')
         driver.get(url)
         
-        problem_num, title = find_element(By.XPATH, '//div[@class="h-full"]/span').text.split('.')
-        difficulty_tag = find_element(By.CLASS_NAME, 'mt-3').find_element(By.TAG_NAME, 'div').text
+        problem_num, title = find_element(By.CLASS_NAME, 'text-title-large').find_element(By.XPATH, 'a').text.split('.')
+        try:
+            difficulty_tag = find_element(By.CLASS_NAME, 'text-difficulty-medium', 1).text
+        except:
+            try:
+                difficulty_tag = find_element(By.CLASS_NAME, 'text-difficulty-easy', 1).text
+            except:
+                difficulty_tag = find_element(By.CLASS_NAME, 'text-difficulty-hard', 1).text
         sleep(0.5)
         function_template = find_element(By.CLASS_NAME, 'view-lines').text[:-3]
         try:
@@ -99,7 +105,7 @@ while True:
             function_name = None
 
 
-        problems = find_element(By.CLASS_NAME, '_1l1MA').text.split('\n')
+        problems = find_element(By.CLASS_NAME, 'elfjS').text.split('\n')
         for i in range(len(problems)):
             if 'Example' in problems[i]:
                 problems[i] = f'* {problems[i].strip()}'
