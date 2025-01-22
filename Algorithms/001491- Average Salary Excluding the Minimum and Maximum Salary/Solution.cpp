@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#include "../../Assert.h"
 using namespace std;
 
 // Time complexity: O(n)
@@ -17,8 +18,8 @@ public:
     }
 
     void test() {
-        assert(average( *(new vector<int>( {1000, 2000, 3000} )) ) == 2000 );
-        assert(average( *(new vector<int>( {4000, 3000, 1000, 2000} )) ) == 2500 );
+        assertEqual(average( *(new vector<int>( {1000, 2000, 3000} )) ), 2000 );
+        assertEqual(average( *(new vector<int>( {4000, 3000, 1000, 2000} )) ), 2500 );
         cout<<"test succeeded.\n";
     }
 };
