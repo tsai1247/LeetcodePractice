@@ -6,21 +6,21 @@ using namespace std;
 class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
-        int bias = 0;
-        for(int i=0; i<nums.size(); i++)
+        int cur = 0;
+        for(auto num : nums)
         {
-            if(nums[i] == 0)
+            if(num != 0)
             {
-                bias++;
-            }
-            else
-            {
-                nums[i-bias] = nums[i];
+                nums[cur++] = num;
             }
         }
-        for(int i=nums.size()-bias; i<nums.size(); i++)
+
+        for(int i=cur; i<nums.size(); i++)
         {
-            nums[i] = 0;
+            if(nums[i] != 0)
+            {
+                nums[i] = 0;
+            }
         }
     }
 
