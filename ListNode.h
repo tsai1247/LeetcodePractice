@@ -7,6 +7,26 @@ struct ListNode {
     ListNode() : val(0), next(nullptr) {}
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
+    
+    // set head[cyclehead] -> next = head[cycletail]
+    // index_cyclehead and index_cycletail are 0-based
+    ListNode* addCycle(int index_cyclehead, int index_cycletail)
+    {
+        ListNode* cur = this;
+        for(int i=0; i<index_cyclehead; i++)
+        {
+            cur = cur->next;
+        }
+
+        ListNode* tail = this;
+        for(int i=0; i<index_cyclehead; i++)
+        {
+            tail = tail->next;
+        }
+
+        cur->next = tail;
+        return this;
+    };
 };
 
 bool Equals(ListNode* a, ListNode* b)
@@ -34,24 +54,4 @@ ListNode* make_ListNode(vector<int>& list)
         cur = cur->next;
     }
     return ret;
-}
-
-// 設定 head[cyclehead] -> next = head[cycletail]
-// index_cyclehead and index_cycletail are 0-based
-void addCycle(ListNode* head, int index_cyclehead, int index_cycletail)
-{
-    ListNode* cur = head;
-    for(int i=0; i<index_cyclehead; i++)
-    {
-        cur = cur->next;
-    }
-
-    ListNode* tail = head;
-    for(int i=0; i<index_cyclehead; i++)
-    {
-        tail = tail->next;
-    }
-
-    cur->next = tail;
-
 }

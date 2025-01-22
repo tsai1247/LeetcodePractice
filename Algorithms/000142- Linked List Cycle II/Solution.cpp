@@ -1,5 +1,5 @@
 #include<bits/stdc++.h>
-#include "../ListNode.h"
+#include "../../ListNode.h"
 using namespace std;
 
 // Time complexity: O(n) (at most n*2 times of loop)
@@ -53,39 +53,31 @@ public:
     void test() {
         ListNode* head;
         
-        head = make_ListNode(*(new vector<int>( {3,2,0,-4} )));
-        addCycle(head, 0, 3);
+        head = make_ListNode(*(new vector<int>( {3,2,0,-4} )))->addCycle(0, 3);
         assert(detectCycle(head)->val == 3);
 
-        head = make_ListNode(*(new vector<int>( {3,2,0,-4} )));
-        addCycle(head, 1, 3);
+        head = make_ListNode(*(new vector<int>( {3,2,0,-4} )))->addCycle(1, 3);
         assert(detectCycle(head)->val == 2);
 
-        head = make_ListNode(*(new vector<int>( {3,2,0,-4} )));
-        addCycle(head, 2, 3);
+        head = make_ListNode(*(new vector<int>( {3,2,0,-4} )))->addCycle(2, 3);
         assert(detectCycle(head)->val == 0);
 
-        head = make_ListNode(*(new vector<int>( {3,2,0,-4} )));
-        addCycle(head, 3, 3);
+        head = make_ListNode(*(new vector<int>( {3,2,0,-4} )))->addCycle(3, 3);
         assert(detectCycle(head)->val == -4);
 
-        head = make_ListNode(*(new vector<int>( {3} )));
-        addCycle(head, 0, 0);
+        head = make_ListNode(*(new vector<int>( {3} )))->addCycle(0, 0);
         assert(detectCycle(head)->val == 3);
 
         head = make_ListNode(*(new vector<int>( {} )));
         assert(detectCycle(head) == NULL);
 
-        head = make_ListNode(*(new vector<int>( {1, 2, 3} )));
-        addCycle(head, 0, 2);
+        head = make_ListNode(*(new vector<int>( {1, 2, 3} )))->addCycle(0, 2);
         assert(detectCycle(head)->val == 1);
         
-        head = make_ListNode(*(new vector<int>( {1, 2, 3} )));
-        addCycle(head, 1, 2);
+        head = make_ListNode(*(new vector<int>( {1, 2, 3} )))->addCycle(1, 2);
         assert(detectCycle(head)->val == 2);
         
-        head = make_ListNode(*(new vector<int>( {1, 2, 3} )));
-        addCycle(head, 2, 2);
+        head = make_ListNode(*(new vector<int>( {1, 2, 3} )))->addCycle(2, 2);
         assert(detectCycle(head)->val == 3);
 
         cout<<"test succeeded.\n";

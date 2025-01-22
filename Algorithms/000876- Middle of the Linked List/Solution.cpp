@@ -1,5 +1,5 @@
 #include<bits/stdc++.h>
-#include "../ListNode.h"
+#include "../../ListNode.h"
 using namespace std;
 
 // Time complexity: O(n) (run n/2 times in loop)

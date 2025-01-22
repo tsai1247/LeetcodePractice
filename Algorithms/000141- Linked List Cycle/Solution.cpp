@@ -1,5 +1,5 @@
 #include<bits/stdc++.h>
-#include "../ListNode.h"
+#include "../../ListNode.h"
 using namespace std;
 
 // Time complexity: O(n) (n次迴圈後，slow跟fast會拉開n的距離，也是有cycle時最差的清況)
@@ -37,23 +37,19 @@ public:
     void test() {
         ListNode* list;
         
-        list = make_ListNode(*(new vector<int>( {3,2,0,-4} )));
-        addCycle(list, 3, 1);
+        list = make_ListNode(*(new vector<int>( {3,2,0,-4} )))->addCycle(3, 1);
         assert(hasCycle(list) == true );
 
-        list = make_ListNode(*(new vector<int>( {1, 2} )));
-        addCycle(list, 1, 0);
+        list = make_ListNode(*(new vector<int>( {1, 2} )))->addCycle(1, 0);
         assert(hasCycle(list) == true );
         
-        list = make_ListNode(*(new vector<int>( {1, 2} )));
-        addCycle(list, 1, 1);
+        list = make_ListNode(*(new vector<int>( {1, 2} )))->addCycle(1, 1);
         assert(hasCycle(list) == true );
 
         list = make_ListNode(*(new vector<int>( {1} )));
         assert(hasCycle(list) == false );
         
-        list = make_ListNode(*(new vector<int>( {1} )));
-        addCycle(list, 0, 0);
+        list = make_ListNode(*(new vector<int>( {1} )))->addCycle(0, 0);
         assert(hasCycle(list) == true );
 
         list = make_ListNode(*(new vector<int>( {} )));

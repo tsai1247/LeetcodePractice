@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-#include "../ListNode.h"
+#include "../../ListNode.h"
 
 // Time complexity: min( O(depth1), O(depth2) )
 // Space complexity: O(1)
