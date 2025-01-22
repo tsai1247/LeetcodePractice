@@ -204,7 +204,9 @@ while True:
         if replace:
             open(f'{foldername}/Problem.md', 'w', encoding='utf-8').writelines(md_content)
 
-        print('\ntemplate grenerated.')
+        print('\ntemplate generated.')
     except Exception as e:
         print('template generation failed.')
         open('log.txt', 'a', encoding='utf-8').write(str(e) + '\n')
+    finally:
+        driver.close()
