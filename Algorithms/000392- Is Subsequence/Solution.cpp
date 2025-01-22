@@ -6,19 +6,19 @@ using namespace std;
 class Solution {
 public:
     bool isSubsequence(string s, string t) {
-        if(s.size() > t.size())
-            return false;
-        for(int i=0, j=0; i < s.size(); i++, j++)
+        auto iter = s.begin();
+        for(auto c : t)
         {
-            while(j<t.size() && s[i] != t[j])
+            if(c == *iter)
             {
-                j++;
+                iter++;
             }
-            
-            if(j == t.size())
-                return false;
+            if (iter == s.end())
+            {
+                return true;
+            }   
         }
-        return true;
+        return iter == s.end();
     }
 
     void test() {
