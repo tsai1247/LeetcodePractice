@@ -1,5 +1,7 @@
 def getKey(key: str):
-    key = key.replace('/submissions', '')
+    tabList = ['description', 'editorial', 'solutions', 'submissions']
+    for tab in tabList:
+        key = key.replace(f'/{tab}', '')
     items = key.split('/')
     for i in items[::-1]:
         if i != '' and i[0] != '?':
